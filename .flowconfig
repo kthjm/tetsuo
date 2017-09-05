@@ -1,0 +1,12 @@
+[ignore]
+.*/lib/.*
+.*/node_modules/.*
+.*/prettier.config.js
+.*/package.json
+[include]
+
+[libs]
+
+[lints]
+
+[options]
