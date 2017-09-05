@@ -6,7 +6,7 @@
 
 ### travis
 
-1. prepare
+1. **prepare**
 
 ```yml
 language: node_js
@@ -16,14 +16,10 @@ after_success:
 - yarn coverage # nyc report coverage to coveralls
 ```
 
-2. modify
-```shell
-travis setup npm // api_key is set latter so empty.
-
-yarn config list // copy: info npm config { '_authToken': '8-4-4-12' }
-
-travis encrypt 8-4-4-12 --add deploy.api_key // api_key added
-```
+2. **modify**
+   1. `travis setup npm` because set latter, `api_key` is left as empty.
+   2. `yarn config list` copy `'_authToken': '8-4-4-12'`
+   3. `travis encrypt 8-4-4-12 --add deploy.api_key` added
 
 ### publish new
 **complete on github.**
