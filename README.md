@@ -4,9 +4,9 @@
 
 <img src="http://68.media.tumblr.com/4a9fe55d28eadd0ca27bd328c7414d81/tumblr_mnkzxq6gzT1sn2pi2o1_1280.jpg" style="width:100%" />
 
-#### travis
+### travis
 
-1.prepare
+1. prepare
 
 ```yml
 language: node_js
@@ -16,7 +16,7 @@ after_success:
 - yarn coverage # nyc report coverage to coveralls
 ```
 
-2.modify
+2. modify
 ```shell
 travis setup npm // api_key is set latter so empty.
 
@@ -25,16 +25,11 @@ yarn config list // copy: info npm config { '_authToken': '8-4-4-12' }
 travis encrypt 8-4-4-12 --add deploy.api_key // api_key added
 ```
 
-#### publish new
-
-```shell
-// yarn config set version-git-tag false
-yarn version
-git add .
-git commit -m "message"
-git tag 0.0.0
-git push origin master --follow-tags
-```
+### publish new
+**complete on github.**
+1. edit `version` in `package.json`
+2. create new `tag` and `release`
+3. `travisci` publish new
 
 ## devDependencies
 
