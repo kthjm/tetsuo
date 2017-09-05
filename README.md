@@ -32,7 +32,8 @@ travis encrypt 8-4-4-12 --add deploy.api_key // api_key added
 yarn version
 git add .
 git commit -m "message"
-git
+git tag 0.0.0
+git push origin master --follow-tags
 ```
 
 ## devDependencies
