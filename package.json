@@ -1,6 +1,6 @@
 {
 	"name": "tetsuo",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"main": "./lib/index.js",
 	"license": "MIT",
 	"prettier": {
@@ -14,20 +14,34 @@
 		]
 	},
 	"babel": {
-		"presets": ["es2015","flow"],
-		"plugins": ["add-module-exports","array-includes"],
+		"presets": [
+			"es2015",
+			"flow"
+		],
+		"plugins": [
+			"add-module-exports",
+			"array-includes"
+		],
 		"env": {
 			"build": {
-				"plugins": ["transform-regenerator"]
+				"plugins": [
+					"transform-regenerator"
+				]
 			},
 			"test": {
-				"presets": ["power-assert"],
-				"plugins": ["istanbul"]
+				"presets": [
+					"power-assert"
+				],
+				"plugins": [
+					"istanbul"
+				]
 			}
 		}
 	},
 	"nyc": {
-		"require": ["babel-register"],
+		"require": [
+			"babel-register"
+		],
 		"sourceMap": false,
 		"instrument": false
 	},
