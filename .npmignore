@@ -5,3 +5,4 @@ test/
 .gitignore
 .prettierignore
 .travis.yml
+yarn.lock
