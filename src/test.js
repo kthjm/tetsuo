@@ -1,2 +1,0 @@
-// @flow
-var a = 'hoge'

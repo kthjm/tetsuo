@@ -3,38 +3,31 @@
 [![Build Status](https://travis-ci.org/kthjm/tetsuo.svg?branch=master)](https://travis-ci.org/kthjm/tetsuo)
 [![Coverage Status](https://coveralls.io/repos/github/kthjm/tetsuo/badge.svg?branch=master)](https://coveralls.io/github/kthjm/tetsuo?branch=master)
 
-
 **fatigue but skeleton.**
 
 <img src="http://68.media.tumblr.com/4a9fe55d28eadd0ca27bd328c7414d81/tumblr_mnkzxq6gzT1sn2pi2o1_1280.jpg" style="width:100%" />
 
 ## devDependencies
 
-* [`flowtype`](https://github.com/facebook/flow)
-    * [libdef](https://flow.org/en/docs/libdefs/#whats-a-library-definition-a-classtoc-idtoc-what-s-a-library-definition-hreftoc-what-s-a-library-definitiona)
-    > If a third-party library that has no type information is used by your project, Flow will treat it like any other untyped dependency and mark all of its exports as any. Interestingly, this is the only place that Flow will implicitly inject any into your program.
-    >
-    > Because of this behavior, it is a best practice to find or write libdefs for as many of the third-party libraries that you use as you can. We recommend checking out the flow-typed tool and repository , which helps you quickly find and install pre-existing libdefs for your third-party dependencies.
+* [`flow`](https://github.com/facebook/flow)
 
 * [`mocha`](https://github.com/mochajs/mocha)
 
     * [`power-assert`](https://github.com/power-assert-js/power-assert)
 
+    * [`nyc`](https://github.com/istanbuljs/nyc)
 
-* [`travis`](https://travis-ci.org/)
+    * [`travis`](https://travis-ci.org/)
 
     * [`coveralls`](https://github.com/nickmerwin/node-coveralls)
 
-    * [`nyc`](https://github.com/istanbuljs/nyc)
-
 * [`prettier`](https://github.com/prettier/prettier)
+
     * [`lint-staged`](https://github.com/okonet/lint-staged)
+
     * [`husky`](https://github.com/typicode/husky)
 
-    > You can use Prettier with a pre-commit tool. This can re-format your files that are marked as "staged" via git add before you commit.
-    https://github.com/prettier/prettier#pre-commit-hook
-
-* [**`babel`**](https://github.com/babel/babel)
+* [`babel`](https://github.com/babel/babel)
 
 **`babel`** is used `build` and `test` so it is the core.
 
@@ -91,7 +84,10 @@ And i think there is a danger of duplication.
 * use `babel-plugin-istanbul`
 * `NODE_ENV === "test"`
 
-so use `env` property in babel config and [`cross-env`](https://github.com/kentcdodds/cross-env).
+use `env` property in babel config and [`cross-env`](https://github.com/kentcdodds/cross-env).
+
+## power-assert and rewire
+[`babel-plugin-rewire` breaks `babel-preset-power-assert` #180](https://github.com/speedskater/babel-plugin-rewire/issues/180)
 
 ## regenerator-runtime
 only use `build`.
@@ -103,7 +99,7 @@ no need in `test`.
 [--with-node-modules](https://github.com/prettier/prettier#--with-node-modules)
 > Prettier CLI will ignore files located in node_modules directory. To opt-out from this behavior use --with-node-modules flag.
 
-so list `.prettierignore` that exclude `node_modules`. (e.g.`flow-typed`)
+list `.prettierignore` that exclude `node_modules`. (e.g.`flow-typed`)
 
 ## husky and lint-staged
 
@@ -120,19 +116,108 @@ so list `.prettierignore` that exclude `node_modules`. (e.g.`flow-typed`)
 >
 > [Add better support for partially staged files #62](https://github.com/okonet/lint-staged/issues/62)
 
-so can't use `lint-staged` with `husky` still ???
+can't use `lint-staged` with `husky` still ???
 
 then trying to use, all files staged is not pass to `prettier` in my case.
 
 using `prettier` with `lint-staged` and `husky` may be still unstable,
 
-so take temporary plan B:
+take temporary plan B:
 ```json
 "format": "prettier --write **/*.js package.json",
 "precommit": "yarn format"
 ```
 
 mistaken issue: [typicode/husky #182](https://github.com/typicode/husky/issues/182)
+
+## meta information
+* code **how**
+* test **what**
+* ~~commit **why**~~
+* comment **why not**
+
+[source](https://twitter.com/t_wada/status/904916106153828352)
+
+[コミットログにはWhyを書けとよく言われるが、実はそれほど簡単ではない件について](http://qiita.com/DQNEO/items/00da79896d65d6e161f9)
+> 例えば、コミットログに
+>
+> 「登録画面のtitle要素を変更」
+>
+> などと書かれていたとすると、「いやいや、そんなのはgit log -pすればわかるでしょ。何で変更するのかその理由を書いてよ」と言いたくなります。
+
+what's means that **commit must be "why"** ??
+
+[How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/)
+![](https://i.gyazo.com/9ad588370cb205543086ab50e6cbe04b.png)
+
+it may be incorrect to make them parallel.
+
+above capture seem that **why** mean **why commit** not **why code**.
+
+[gitにおけるコミットログ/メッセージ例文集100](https://gist.github.com/mono0926/e6ffd032c384ee4c1cef5a2aa4f778d7)
+> * Add	1149
+>
+> * Fix	1014
+>
+> * Update	584
+>
+> * Remove	566
+>
+> * Use	382
+>
+> * Move 178
+
+## flow
+[**Flow offers different methods to infer types for third-party source code. **](https://github.com/ryyppy/flow-guide/tree/master/styleguide#libdef-files)
+> #### Using and Vendoring js.flow Files ("Shadow Files")
+> vendor flow-type declarations is by copying the original source of each vendored file and put it in an accompanying file with a .js.flow suffix.
+>
+> For our projects, we always vendor complementary flow.js files. Unfortunately, we don't have a solution for minified source code yet (except for writing libdef declarations by hand).
+>
+> Also, this method will eventually cause problems with future major (breaking) flow updates. Until the community made up their mind about how to handle these dependencies, we will hopefully be able to update flow-bin dependencies in consuming codebases as soon as we do in our libraries.
+>
+> #### External Libdef Files
+> Since we try to achieve a 100% flow coverage, there needs to be a balance between value gain of using another node-module and type-safetiness.
+>
+> For maintaining and retrieving libdef files of more popular projects we use [flow-typed](https://github.com/flowtype/flow-typed). By default, the flow-typed cli binary will install downloaded libdef files in [PROJECT]/flow-typed/npm, which are tagged by flow & module version. These files always have to be tracked in git.
+>
+> Whenever you use flow-typed, make sure to add the path flow-typed/ in the [LIB] section of your project's .flowconfig. Otherwise, flow might not pick up the libdef files.
+>
+> If you have to write a libdef on your own, make sure to put these definitions directly in the flow-typed, but not in the flow-typed/npm subdirectory.
+
+and **If a third-party library that has no type information is used by your project, Flow will treat it like any other untyped dependency and mark all of its exports as `any`.** [(Library Definitions)](https://flow.org/en/docs/libdefs/)
+
+can use [AgentME/flow-copy-source](https://github.com/AgentME/flow-copy-source) to copy them into a destination directory with the .flow suffix appended to the filename.
+
+### `module.ignore_non_literal_requires` is needed???
+[module.ignore_non_literal_requires (boolean)](https://flow.org/en/docs/config/options/#toc-module-ignore-non-literal-requires-boolean)
+> Set this to `true` and Flow will no longer complain when you use `require()` with something other than a string literal.
+> The default value is `false`.
+
+[「後付の型システム」の活用についてFlowtypeとReduxから考える](http://qiita.com/mizchi/items/8cf4e0c868f5c49ebcbf)
+> オプションで module.ignore_non_literal_requires=true とすると、require/importしたものがanyとなり
+
+but it seems that external library to be `import/required`ed is treated as `any` by default.
+It seems to me that the condition is not `module.ignore_non_literal_requires=true`, but `.flowconfig` doesn't includes `.*/node_modules/.*` in `ignore` property.
+
+<!-- ### interpret
+`type` means `super`. (it may be literal values as `type` too.)
+
+all `instance`s exists in code must be any `sub` and can be applied `type`. -->
+
+### use words
+* [`type` | `:`]()
+* [`property?` | `?value`]()
+* [`interface` | `implements`]()
+* [`opaque`]()
+
+<!-- [libdef](https://flow.org/en/docs/libdefs/#whats-a-library-definition-a-classtoc-idtoc-what-s-a-library-definition-hreftoc-what-s-a-library-definitiona)
+> If a third-party library that has no type information is used by your project, Flow will treat it like any other untyped dependency and mark all of its exports as any. Interestingly, this is the only place that Flow will implicitly inject any into your program.
+>
+> Because of this behavior, it is a best practice to find or write libdefs for as many of the third-party libraries that you use as you can. We recommend checking out the flow-typed tool and repository , which helps you quickly find and install pre-existing libdefs for your third-party dependencies.
+
+**flow is the mirror world.** -->
+
 
 ## eslint
 **never use [`eslint`](https://eslint.org/).**
