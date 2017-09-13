@@ -2,7 +2,18 @@
   "name": "tetsuo",
   "version": "0.0.1",
   "main": "./lib/index.js",
+  "description": "",
   "license": "MIT",
+  "repository": "kthjm/tetsuo",
+  "author": {
+    "name": "kthjm",
+    "email": "toxictoxer@gmail.com",
+    "url": "kthjm.github.io"
+  },
+  "engines": {
+    "node": ""
+  },
+  "keywords": [],
   "prettier": {
     "semi": false,
     "singleQuote": true
