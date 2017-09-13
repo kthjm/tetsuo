@@ -27,74 +27,72 @@ describe(`tetsuo test`, () => {
     const errorarg = ``
     const expectMessage = `value must be "string"`
 
-    describe(`myfn1`,()=>{
-        const { myfn1 } = myModules
+    describe(`myfn1`, () => {
+      const { myfn1 } = myModules
 
-        it(`throw`, async () => {
-            try{
-                await myfn1(errorarg)
-            }catch(err){
-                assert.deepStrictEqual(err.message,expectMessage)
-            }
-        });
+      it(`throw`, async () => {
+        try {
+          await myfn1(errorarg)
+        } catch (err) {
+          assert.deepStrictEqual(err.message, expectMessage)
+        }
+      })
 
-        it(`prefix`, async () => {
-            const result = await myfn1(firstarg, 'prefix')
-            const expect = `myfn1_asyncfn_${firstarg}`
-            assert.deepStrictEqual(result, expect)
-        })
+      it(`prefix`, async () => {
+        const result = await myfn1(firstarg, 'prefix')
+        const expect = `myfn1_asyncfn_${firstarg}`
+        assert.deepStrictEqual(result, expect)
+      })
 
-        it(`suffix`, async () => {
-            const result = await myfn1(firstarg, 'suffix')
-            const expect = `${firstarg}_asyncfn_myfn1`
-            assert.deepStrictEqual(result, expect)
-        });
-        it(`void`,async () => {
-            const result = await myfn1(firstarg)
-            const expect = undefined
-            assert.deepStrictEqual(result, expect)
-        });
+      it(`suffix`, async () => {
+        const result = await myfn1(firstarg, 'suffix')
+        const expect = `${firstarg}_asyncfn_myfn1`
+        assert.deepStrictEqual(result, expect)
+      })
+      it(`void`, async () => {
+        const result = await myfn1(firstarg)
+        const expect = undefined
+        assert.deepStrictEqual(result, expect)
+      })
     })
 
-    describe(`myfn2`,()=>{
-        const { myfn2 } = myModules
+    describe(`myfn2`, () => {
+      const { myfn2 } = myModules
 
-        it(`throw`, async () => {
-            try{
-                await myfn2(errorarg)
-            }catch(err){
-                assert.deepStrictEqual(err.message,expectMessage)
-            }
-        });
+      it(`throw`, async () => {
+        try {
+          await myfn2(errorarg)
+        } catch (err) {
+          assert.deepStrictEqual(err.message, expectMessage)
+        }
+      })
 
-        it(`prefix`, async () => {
-            const result = await myfn2(firstarg, 'prefix')
-            const expect = `myfn2_asyncfn_${firstarg}`
-            assert.deepStrictEqual(result, expect)
-        })
+      it(`prefix`, async () => {
+        const result = await myfn2(firstarg, 'prefix')
+        const expect = `myfn2_asyncfn_${firstarg}`
+        assert.deepStrictEqual(result, expect)
+      })
 
-        it(`suffix`, async () => {
-            const result = await myfn2(firstarg, 'suffix')
-            const expect = `${firstarg}_asyncfn_myfn2`;
-            assert.deepStrictEqual(result, expect)
-        })
+      it(`suffix`, async () => {
+        const result = await myfn2(firstarg, 'suffix')
+        const expect = `${firstarg}_asyncfn_myfn2`
+        assert.deepStrictEqual(result, expect)
+      })
 
-        it(`void`,async () => {
-            const result = await myfn2(firstarg)
-            const expect = undefined
-            assert.deepStrictEqual(result, expect)
-        });
-    });
+      it(`void`, async () => {
+        const result = await myfn2(firstarg)
+        const expect = undefined
+        assert.deepStrictEqual(result, expect)
+      })
+    })
 
     it(`asyncfn`, async () => {
       const asyncfn = myModules.__get__(`asyncfn`)
-      const result = await asyncfn();
-      const expect = `asyncfn`;
+      const result = await asyncfn()
+      const expect = `asyncfn`
       assert.deepStrictEqual(result, expect)
-    });
-
+    })
   })
-
 })
 
 // import regeneratorRuntime from "regenerator-runtime";
