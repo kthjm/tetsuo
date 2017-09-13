@@ -14,10 +14,10 @@
 * [`mocha`](https://github.com/mochajs/mocha)
 
     * [`power-assert`](https://github.com/power-assert-js/power-assert)
+    
+    * [`travis`](https://travis-ci.org/)
 
     * [`nyc`](https://github.com/istanbuljs/nyc)
-
-    * [`travis`](https://travis-ci.org/)
 
     * [`coveralls`](https://github.com/nickmerwin/node-coveralls)
 
@@ -168,7 +168,7 @@ above capture seem that **why** mean **why commit** not **why code**.
 > * Move 178
 
 ## flow
-[**Flow offers different methods to infer types for third-party source code. **](https://github.com/ryyppy/flow-guide/tree/master/styleguide#libdef-files)
+[**Flow offers different methods to infer types for third-party source code.**](https://github.com/ryyppy/flow-guide/tree/master/styleguide#libdef-files)
 > #### Using and Vendoring js.flow Files ("Shadow Files")
 > vendor flow-type declarations is by copying the original source of each vendored file and put it in an accompanying file with a .js.flow suffix.
 >
@@ -207,9 +207,89 @@ all `instance`s exists in code must be any `sub` and can be applied `type`. -->
 
 ### use words
 * [`type` | `:`]()
+   ```javascript
+      type MyFn$Result = {
+         foo: number,
+         bar: string
+      };
+      type MyFn = (first: string, second: boolean) => MyFn$Result | void;
+      const myfn: MyFn = (first,second) => {
+         if(!first) return;
+         const foo = 1000;
+         const bar = "bar";
+         return {foo,bar};
+      }
+   ```
 * [`property?` | `?value`]()
-* [`interface` | `implements`]()
-* [`opaque`]()
+   ```javascript
+      type MyFn$Options = {
+        property1: ?number,
+        property2?: number
+      };
+      const myfn = (first?: string, options: MyFn$Options): boolean => {
+         return true;
+      }
+
+      const property1 = null;
+      const property2 = null;
+      myfn(null,{property1,property2}); // => two Errors
+   ```
+* [`class` | `interface` | `implements`]()
+   ```javascript
+      interface Foo {
+        foo(): string
+      };
+      interface Bar {
+        bar(): number
+      };
+
+      class MyClass implements Foo,Bar {
+        property: number;
+        constructor(val: number){
+          this.property = val;
+        }
+        foo(){
+          return String(this.property);
+        }
+        bar(){
+          return this.property;
+        }
+      }
+   ```
+* [`<T>`](https://flow.org/en/docs/types/generics/)
+   ```javascript
+      function fn<T>(value: T): T {
+         return value;
+      }
+      fn(10);
+      fn("foo");
+      // i don't know when use this.
+      
+      type MyType<T> = {
+         property1: T,
+         property2: T
+      }
+      const object1: MyType<string> = {
+         property1: "foo",
+         property2: "bar"
+      }
+      const object2: MyType<boolean> = {
+         property1: true,
+         property2: false
+      }
+      const object3: MyType<number> = {
+         property1: 10,
+         property2: "10" // => Error
+      }
+   ```
+* [`opaque`](https://flow.org/en/docs/types/opaque-types/)
+* [`declare`](https://flow.org/en/docs/libdefs/creation/)
+   * type
+   * class
+   * function
+   * var
+   * module "name"
+   * export
 
 <!-- [libdef](https://flow.org/en/docs/libdefs/#whats-a-library-definition-a-classtoc-idtoc-what-s-a-library-definition-hreftoc-what-s-a-library-definitiona)
 > If a third-party library that has no type information is used by your project, Flow will treat it like any other untyped dependency and mark all of its exports as any. Interestingly, this is the only place that Flow will implicitly inject any into your program.
