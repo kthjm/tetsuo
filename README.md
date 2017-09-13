@@ -11,6 +11,10 @@
 
 * [`flow`](https://github.com/facebook/flow)
 
+   * [`flow-typed`](https://github.com/flowtype/flow-typed)
+   
+   * [`flow-copy-source`](https://github.com/AgentME/flow-copy-source)
+
 * [`mocha`](https://github.com/mochajs/mocha)
 
     * [`power-assert`](https://github.com/power-assert-js/power-assert)
@@ -88,6 +92,8 @@ use `env` property in babel config and [`cross-env`](https://github.com/kentcdod
 
 ## power-assert and rewire
 [`babel-plugin-rewire` breaks `babel-preset-power-assert` #180](https://github.com/speedskater/babel-plugin-rewire/issues/180)
+
+I encountered the situation same this issue before, but it doesn't happen now.
 
 ## regenerator-runtime
 only use `build`.
@@ -208,79 +214,79 @@ all `instance`s exists in code must be any `sub` and can be applied `type`. -->
 ### use words
 * [`type` | `:`]()
    ```javascript
-      type MyFn$Result = {
-         foo: number,
-         bar: string
-      };
-      type MyFn = (first: string, second: boolean) => MyFn$Result | void;
-      const myfn: MyFn = (first,second) => {
-         if(!first) return;
-         const foo = 1000;
-         const bar = "bar";
-         return {foo,bar};
-      }
+   type MyFn$Result = {
+      foo: number,
+      bar: string
+   };
+   type MyFn = (first: string, second: boolean) => MyFn$Result | void;
+   const myfn: MyFn = (first,second) => {
+      if(!first) return;
+      const foo = 1000;
+      const bar = "bar";
+      return {foo,bar};
+   }
    ```
 * [`property?` | `?value`]()
    ```javascript
-      type MyFn$Options = {
-        property1: ?number,
-        property2?: number
-      };
-      const myfn = (first?: string, options: MyFn$Options): boolean => {
-         return true;
-      }
+   type MyFn$Options = {
+     property1: ?number,
+     property2?: number
+   };
+   const myfn = (first?: string, options: MyFn$Options): boolean => {
+      return true;
+   }
 
-      const property1 = null;
-      const property2 = null;
-      myfn(null,{property1,property2}); // => two Errors
+   const property1 = null;
+   const property2 = null;
+   myfn(null,{property1,property2}); // => two Errors
    ```
 * [`class` | `interface` | `implements`]()
    ```javascript
-      interface Foo {
-        foo(): string
-      };
-      interface Bar {
-        bar(): number
-      };
+   interface Foo {
+     foo(): string
+   };
+   interface Bar {
+     bar(): number
+   };
 
-      class MyClass implements Foo,Bar {
-        property: number;
-        constructor(val: number){
-          this.property = val;
-        }
-        foo(){
-          return String(this.property);
-        }
-        bar(){
-          return this.property;
-        }
-      }
+   class MyClass implements Foo,Bar {
+     property: number;
+     constructor(val: number){
+       this.property = val;
+     }
+     foo(){
+       return String(this.property);
+     }
+     bar(){
+       return this.property;
+     }
+   }
    ```
 * [`<T>`](https://flow.org/en/docs/types/generics/)
    ```javascript
-      function fn<T>(value: T): T {
-         return value;
-      }
-      fn(10);
-      fn("foo");
-      // i don't know when use this.
-      
-      type MyType<T> = {
-         property1: T,
-         property2: T
-      }
-      const object1: MyType<string> = {
-         property1: "foo",
-         property2: "bar"
-      }
-      const object2: MyType<boolean> = {
-         property1: true,
-         property2: false
-      }
-      const object3: MyType<number> = {
-         property1: 10,
-         property2: "10" // => Error
-      }
+   function fn<T>(value: T): T {
+      return value;
+   }
+   fn(10);
+   fn("foo");
+   // i don't know when use this.
+
+   type MyType<T> = {
+      property1: T,
+      property2: T
+   }
+   const object1: MyType<string> = {
+      property1: "foo",
+      property2: "bar"
+   }
+   const object2: MyType<boolean> = {
+      property1: true,
+      property2: false
+   }
+   const object3: MyType<number> = {
+      property1: 10,
+      property2: "10" // => Error
+   }
    ```
 * [`opaque`](https://flow.org/en/docs/types/opaque-types/)
 * [`declare`](https://flow.org/en/docs/libdefs/creation/)
