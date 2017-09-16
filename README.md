@@ -327,3 +327,7 @@ all `instance`s exists in code must be any `sub` and can be applied `type`. -->
     > This is where I question having a separate linter tool. When should I run the linter? Should it force me to move curly braces around while I’m hacking away? Should I be stopped before running the build and test suite because of some stray whitespace? Will everyone on my team run it, or will Bob say “oh, yeah, that curly brace is on the end of line 34 because I didn’t run the linter on my change.” (Then I fix it and line 34 is forever blamed to the wrong person.) Because of the useless formatting checks, we want to defer getting a stack of warnings until we “clean up the code someday.” But for the 100% incorrectness checks, we want them right there next to the type checker, and enforced for everyone.
     >
     > My conclusion for 100% incorrectness issues: **add them to the compiler.**
+    
+
+## License
+MIT (http://opensource.org/licenses/MIT)
