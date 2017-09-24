@@ -329,5 +329,8 @@ all `instance`s exists in code must be any `sub` and can be applied `type`. -->
     > My conclusion for 100% incorrectness issues: **add them to the compiler.**
     
 
+## Installation
+## Usage
+## API
 ## License
 MIT (http://opensource.org/licenses/MIT)

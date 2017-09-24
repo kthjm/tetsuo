@@ -23,7 +23,10 @@
     "*.js": ["prettier --write", "git add"]
   },
   "babel": {
-    "presets": ["es2015", "flow"],
+    "presets": [
+      ["env", { "targets": { "node": "6" } }],
+      "flow"
+    ],
     "plugins": ["add-module-exports", "array-includes"],
     "env": {
       "build": {
@@ -41,16 +44,18 @@
     "instrument": false
   },
   "scripts": {
+    "typed": "flow-typed",
+    "postintall": "typed install",
     "flow": "flow",
     "nycha": "cross-env NODE_ENV=test nyc mocha",
     "test": "run-s flow nycha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "cross-env NODE_ENV=build babel ./src -d ./lib",
-    "postbuild": "flow-copy-source ./src ./lib",
+    "flowcopy": "flow-copy-source ./src ./lib",
     "format": "prettier --write **/*.js package.json",
-    "precommit": "yarn format",
+    "postbuild": "run-s flowcopy format",
+    "///precommit": "yarn format",
     "//precommit": "lint-staged",
-    "typed": "flow-typed",
     "node": "node --require babel-register"
   },
   "devDependencies": {
@@ -59,8 +64,8 @@
     "babel-plugin-array-includes": "^2.0.3",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-rewire": "^1.1.0",
+    "babel-preset-env": "^1.6.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-power-assert": "^1.0.0",
     "babel-register": "^6.26.0",
